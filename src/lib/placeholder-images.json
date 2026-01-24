@@ -161,6 +161,72 @@
       "description": "A healthy salad with grilled chicken pieces.",
       "imageUrl": "https://images.unsplash.com/photo-1551248429-434754a5c632?w=600&q=80",
       "imageHint": "chicken salad"
+    },
+    {
+      "id": "half-grill",
+      "description": "1 Rumali Roti + Half Grill + Garlic Sauce",
+      "imageUrl": "https://images.unsplash.com/photo-1618310912296-4945c7325521?w=600&q=80",
+      "imageHint": "lebanese grill"
+    },
+    {
+      "id": "half-grill-combo",
+      "description": "1 Rumali Roti + Half Grill + Garlic Sauce+Fries+Softdrink",
+      "imageUrl": "https://images.unsplash.com/photo-1526318896980-cf78c0882475?w=600&q=80",
+      "imageHint": "grill combo"
+    },
+    {
+      "id": "full-grill",
+      "description": "2 Rumali Roti + Full Grill + Garlic Sauce",
+      "imageUrl": "https://images.unsplash.com/photo-1599499863435-263a45c7a032?w=600&q=80",
+      "imageHint": "full grill"
+    },
+    {
+      "id": "full-grill-combo",
+      "description": "2 Rumali Roti + Full Grill + Garlic Sauce+Fries+Softdrink",
+      "imageUrl": "https://images.unsplash.com/photo-1624463322059-1e1801c80f3f?w=600&q=80",
+      "imageHint": "grill combo meal"
+    },
+    {
+      "id": "chicken-broast-8",
+      "description": "8 pieces of crispy broasted chicken.",
+      "imageUrl": "https://images.unsplash.com/photo-1569058242253-92a9c5552db3?w=600&q=80",
+      "imageHint": "broasted chicken"
+    },
+    {
+      "id": "chicken-broast-4",
+      "description": "4 pieces of crispy broasted chicken.",
+      "imageUrl": "https://images.unsplash.com/photo-1626082902029-27038c35314a?w=600&q=80",
+      "imageHint": "fried chicken"
+    },
+    {
+      "id": "chicken-broast-2",
+      "description": "2 pieces of crispy broasted chicken.",
+      "imageUrl": "https://images.unsplash.com/photo-1626777552726-4a6b54c97e46?w=600&q=80",
+      "imageHint": "chicken pieces"
+    },
+    {
+      "id": "chicken-twister",
+      "description": "A wrap with crispy chicken.",
+      "imageUrl": "https://images.unsplash.com/photo-1604899200235-3c133a1f8e24?w=600&q=80",
+      "imageHint": "chicken wrap"
+    },
+    {
+      "id": "chicken-popcorn",
+      "description": "Bite-sized pieces of crispy chicken.",
+      "imageUrl": "https://images.unsplash.com/photo-1599495220324-91a7b8a13a43?w=600&q=80",
+      "imageHint": "chicken popcorn"
+    },
+    {
+      "id": "fish-chips",
+      "description": "Classic fried fish and chips.",
+      "imageUrl": "https://images.unsplash.com/photo-1598860262175-adb639f75f92?w=600&q=80",
+      "imageHint": "fish chips"
+    },
+    {
+      "id": "chicken-nuggets",
+      "description": "8 pieces of golden chicken nuggets.",
+      "imageUrl": "https://images.unsplash.com/photo-1613584852449-07fbb468f047?w=600&q=80",
+      "imageHint": "chicken nuggets"
     }
   ]
 }

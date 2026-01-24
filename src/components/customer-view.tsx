@@ -20,7 +20,7 @@ export default function CustomerView({ tableId }: { tableId: string | null }) {
   });
 
   const categorizedMenu = useMemo(() => {
-    const categoryOrder = ['Broast Platters', 'Platters', 'Salads', 'Burgers', 'Fries', 'Sides', 'Drinks'];
+    const categoryOrder = ['Lebanese Grill', 'Broasted Chicken', 'Broast Platters', 'Platters', 'Salads', 'Burgers', 'Fries', 'Sides', 'Drinks'];
     
     const grouped = menuItems.reduce((acc, item) => {
       const category = item.category;

@@ -4,6 +4,107 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 const getImage = (id: string) => PlaceHolderImages.find(img => img.id === id);
 
 export const menuItems: MenuItem[] = [
+  // Lebanese Grill
+  {
+    id: 28,
+    name: 'Half Grill',
+    category: 'Lebanese Grill',
+    description: '1 Rumali Roti + Half Grill + Garlic Sauce',
+    price: 249,
+    image: getImage('half-grill')?.imageUrl || '',
+    imageHint: getImage('half-grill')?.imageHint || ''
+  },
+  {
+    id: 29,
+    name: 'Half Grill Combo',
+    category: 'Lebanese Grill',
+    description: '1 Rumali Roti + Half Grill + Garlic Sauce+Fries+Softdrink',
+    price: 299,
+    image: getImage('half-grill-combo')?.imageUrl || '',
+    imageHint: getImage('half-grill-combo')?.imageHint || ''
+  },
+  {
+    id: 30,
+    name: 'Full Grill',
+    category: 'Lebanese Grill',
+    description: '2 Rumali Roti + Full Grill + Garlic Sauce',
+    price: 449,
+    image: getImage('full-grill')?.imageUrl || '',
+    imageHint: getImage('full-grill')?.imageHint || ''
+  },
+  {
+    id: 31,
+    name: 'Full Grill Combo',
+    category: 'Lebanese Grill',
+    description: '2 Rumali Roti + Full Grill + Garlic Sauce+Fries+Softdrink',
+    price: 499,
+    image: getImage('full-grill-combo')?.imageUrl || '',
+    imageHint: getImage('full-grill-combo')?.imageHint || ''
+  },
+  // Broasted Chicken
+  {
+    id: 32,
+    name: 'Chicken Broast (8pcs)',
+    category: 'Broasted Chicken',
+    description: 'Crispy and juicy broasted chicken, 8 pieces.',
+    price: 549,
+    image: getImage('chicken-broast-8')?.imageUrl || '',
+    imageHint: getImage('chicken-broast-8')?.imageHint || ''
+  },
+  {
+    id: 33,
+    name: 'Chicken Broast (4pcs)',
+    category: 'Broasted Chicken',
+    description: 'Crispy and juicy broasted chicken, 4 pieces.',
+    price: 299,
+    image: getImage('chicken-broast-4')?.imageUrl || '',
+    imageHint: getImage('chicken-broast-4')?.imageHint || ''
+  },
+  {
+    id: 34,
+    name: 'Chicken Broast (2pcs)',
+    category: 'Broasted Chicken',
+    description: 'Crispy and juicy broasted chicken, 2 pieces.',
+    price: 159,
+    image: getImage('chicken-broast-2')?.imageUrl || '',
+    imageHint: getImage('chicken-broast-2')?.imageHint || ''
+  },
+  {
+    id: 35,
+    name: 'Chicken Twister',
+    category: 'Broasted Chicken',
+    description: 'A delicious wrap with crispy chicken strips.',
+    price: 119,
+    image: getImage('chicken-twister')?.imageUrl || '',
+    imageHint: getImage('chicken-twister')?.imageHint || ''
+  },
+  {
+    id: 36,
+    name: 'Chicken Popcorn (12pcs)',
+    category: 'Broasted Chicken',
+    description: 'Bite-sized pieces of chicken, fried to a golden crisp.',
+    price: 119,
+    image: getImage('chicken-popcorn')?.imageUrl || '',
+    imageHint: getImage('chicken-popcorn')?.imageHint || ''
+  },
+  {
+    id: 37,
+    name: 'Fish & Chips',
+    category: 'Broasted Chicken',
+    description: 'Classic battered fish served with crispy chips.',
+    price: 269,
+    image: getImage('fish-chips')?.imageUrl || '',
+    imageHint: getImage('fish-chips')?.imageHint || ''
+  },
+  {
+    id: 38,
+    name: 'Chicken Nuggets (8pcs)',
+    category: 'Broasted Chicken',
+    description: 'Golden-fried chicken nuggets, perfect for dipping.',
+    price: 129,
+    image: getImage('chicken-nuggets')?.imageUrl || '',
+    imageHint: getImage('chicken-nuggets')?.imageHint || ''
+  },
   // Burgers
   {
     id: 1,
