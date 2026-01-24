@@ -262,6 +262,126 @@ export const menuItems: MenuItem[] = [
     image: getImage('chicken-salad')?.imageUrl || '',
     imageHint: getImage('chicken-salad')?.imageHint || ''
   },
+  // Wraps
+  {
+    id: 39,
+    name: 'Paneer Wrap',
+    category: 'Wraps',
+    description: 'A delicious wrap with spicy paneer filling.',
+    price: 129,
+    image: getImage('paneer-wrap')?.imageUrl || '',
+    imageHint: getImage('paneer-wrap')?.imageHint || ''
+  },
+  {
+    id: 40,
+    name: 'Chicken Wrap',
+    category: 'Wraps',
+    description: 'A hearty wrap filled with grilled chicken.',
+    price: 139,
+    image: getImage('chicken-wrap')?.imageUrl || '',
+    imageHint: getImage('chicken-wrap')?.imageHint || ''
+  },
+  {
+    id: 41,
+    name: 'Fish Wrap',
+    category: 'Wraps',
+    description: 'A tasty wrap with crispy fried fish.',
+    price: 149,
+    image: getImage('fish-wrap')?.imageUrl || '',
+    imageHint: getImage('fish-wrap')?.imageHint || ''
+  },
+  {
+    id: 42,
+    name: 'Chicken Nugget Wrap',
+    category: 'Wraps',
+    description: 'A fun wrap with chicken nuggets and sauce.',
+    price: 129,
+    image: getImage('chicken-nugget-wrap')?.imageUrl || '',
+    imageHint: getImage('chicken-nugget-wrap')?.imageHint || ''
+  },
+  {
+    id: 43,
+    name: 'Cheese Loaded Chicken Wrap',
+    category: 'Wraps',
+    description: 'A cheesy chicken wrap for cheese lovers.',
+    price: 159,
+    image: getImage('cheese-loaded-chicken-wrap')?.imageUrl || '',
+    imageHint: getImage('cheese-loaded-chicken-wrap')?.imageHint || ''
+  },
+  // Kebabs & Falafel
+  {
+    id: 44,
+    name: 'Doner Falafel',
+    category: 'Kebabs & Falafel',
+    description: 'Classic doner falafel with fresh veggies.',
+    price: 119,
+    image: getImage('doner-falafel')?.imageUrl || '',
+    imageHint: getImage('doner-falafel')?.imageHint || ''
+  },
+  {
+    id: 45,
+    name: 'Durum Falafel Wrap',
+    category: 'Kebabs & Falafel',
+    description: 'Falafel wrapped in a soft durum bread.',
+    price: 129,
+    image: getImage('durum-falafel-wrap')?.imageUrl || '',
+    imageHint: getImage('durum-falafel-wrap')?.imageHint || ''
+  },
+  {
+    id: 46,
+    name: 'Doner Kebab',
+    category: 'Kebabs & Falafel',
+    description: 'Traditional doner kebab with tender meat.',
+    price: 149,
+    image: getImage('doner-kebab')?.imageUrl || '',
+    imageHint: getImage('doner-kebab')?.imageHint || ''
+  },
+  {
+    id: 47,
+    name: 'Durum Kebab Wrap',
+    category: 'Kebabs & Falafel',
+    description: 'Kebab meat wrapped in a delicious durum.',
+    price: 169,
+    image: getImage('durum-kebab-wrap')?.imageUrl || '',
+    imageHint: getImage('durum-kebab-wrap')?.imageHint || ''
+  },
+  // Shawarma
+  {
+    id: 48,
+    name: 'Regular Shawarma',
+    category: 'Shawarma',
+    description: 'Classic chicken shawarma with garlic sauce.',
+    price: 119,
+    image: getImage('regular-shawarma')?.imageUrl || '',
+    imageHint: getImage('regular-shawarma')?.imageHint || ''
+  },
+  {
+    id: 49,
+    name: 'Special Loaded Shawarma',
+    category: 'Shawarma',
+    description: 'Shawarma loaded with extra chicken and toppings.',
+    price: 169,
+    image: getImage('special-loaded-shawarma')?.imageUrl || '',
+    imageHint: getImage('special-loaded-shawarma')?.imageHint || ''
+  },
+  {
+    id: 50,
+    name: 'Peri-Peri Shawarma',
+    category: 'Shawarma',
+    description: 'Spicy peri-peri shawarma for a flavor kick.',
+    price: 139,
+    image: getImage('peri-peri-shawarma')?.imageUrl || '',
+    imageHint: getImage('peri-peri-shawarma')?.imageHint || ''
+  },
+  {
+    id: 51,
+    name: 'BBQ Shawarma',
+    category: 'Shawarma',
+    description: 'Smoky BBQ flavored shawarma.',
+    price: 139,
+    image: getImage('bbq-shawarma')?.imageUrl || '',
+    imageHint: getImage('bbq-shawarma')?.imageHint || ''
+  },
   // Fries
   {
     id: 8,

@@ -227,6 +227,84 @@
       "description": "8 pieces of golden chicken nuggets.",
       "imageUrl": "https://images.unsplash.com/photo-1613584852449-07fbb468f047?w=600&q=80",
       "imageHint": "chicken nuggets"
+    },
+    {
+      "id": "paneer-wrap",
+      "description": "A delicious wrap with spicy paneer filling.",
+      "imageUrl": "https://images.unsplash.com/photo-1625220194771-49bdd72147aa?w=600&q=80",
+      "imageHint": "paneer wrap"
+    },
+    {
+      "id": "chicken-wrap",
+      "description": "A hearty wrap filled with grilled chicken.",
+      "imageUrl": "https://images.unsplash.com/photo-1611599539863-16ce3882a9d6?w=600&q=80",
+      "imageHint": "chicken wrap"
+    },
+    {
+      "id": "fish-wrap",
+      "description": "A tasty wrap with crispy fried fish.",
+      "imageUrl": "https://images.unsplash.com/photo-1598327732298-687f827a487f?w=600&q=80",
+      "imageHint": "fish wrap"
+    },
+    {
+      "id": "chicken-nugget-wrap",
+      "description": "A fun wrap with chicken nuggets and sauce.",
+      "imageUrl": "https://images.unsplash.com/photo-1528735602115-99d9361de947?w=600&q=80",
+      "imageHint": "nugget wrap"
+    },
+    {
+      "id": "cheese-loaded-chicken-wrap",
+      "description": "A cheesy chicken wrap for cheese lovers.",
+      "imageUrl": "https://images.unsplash.com/photo-1609181938923-953f956554f1?w=600&q=80",
+      "imageHint": "cheese wrap"
+    },
+    {
+      "id": "doner-falafel",
+      "description": "Classic doner falafel with fresh veggies.",
+      "imageUrl": "https://images.unsplash.com/photo-1627898018534-31e7e4a1ef96?w=600&q=80",
+      "imageHint": "doner falafel"
+    },
+    {
+      "id": "durum-falafel-wrap",
+      "description": "Falafel wrapped in a soft durum bread.",
+      "imageUrl": "https://images.unsplash.com/photo-1562823812-32775b8f67e4?w=600&q=80",
+      "imageHint": "falafel wrap"
+    },
+    {
+      "id": "doner-kebab",
+      "description": "Traditional doner kebab with tender meat.",
+      "imageUrl": "https://images.unsplash.com/photo-1599110594436-3a7894d30a0d?w=600&q=80",
+      "imageHint": "doner kebab"
+    },
+    {
+      "id": "durum-kebab-wrap",
+      "description": "Kebab meat wrapped in a delicious durum.",
+      "imageUrl": "https://images.unsplash.com/photo-1631515243349-e0cb75fb8d3a?w=600&q=80",
+      "imageHint": "kebab wrap"
+    },
+    {
+      "id": "regular-shawarma",
+      "description": "Classic chicken shawarma with garlic sauce.",
+      "imageUrl": "https://images.unsplash.com/photo-1566737229598-222a57121356?w=600&q=80",
+      "imageHint": "shawarma wrap"
+    },
+    {
+      "id": "special-loaded-shawarma",
+      "description": "Shawarma loaded with extra chicken and toppings.",
+      "imageUrl": "https://images.unsplash.com/photo-1604899200235-3c133a1f8e24?w=600&q=80",
+      "imageHint": "loaded shawarma"
+    },
+    {
+      "id": "peri-peri-shawarma",
+      "description": "Spicy peri-peri shawarma for a flavor kick.",
+      "imageUrl": "https://images.unsplash.com/photo-1625037998396-8575a6105a3b?w=600&q=80",
+      "imageHint": "peri peri shawarma"
+    },
+    {
+      "id": "bbq-shawarma",
+      "description": "Smoky BBQ flavored shawarma.",
+      "imageUrl": "https://images.unsplash.com/photo-1625103445339-44e590421a97?w=600&q=80",
+      "imageHint": "bbq shawarma"
     }
   ]
 }

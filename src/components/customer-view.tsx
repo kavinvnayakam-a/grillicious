@@ -10,6 +10,12 @@ import { CartSheet } from '@/components/cart-sheet';
 import { CartIcon } from '@/components/cart-icon';
 import TableSelection from './table-selection';
 import type { MenuItem } from '@/lib/types';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 export default function CustomerView({ tableId }: { tableId: string | null }) {
   const { clearCart, addToCart } = useCart();
@@ -20,7 +26,7 @@ export default function CustomerView({ tableId }: { tableId: string | null }) {
   });
 
   const categorizedMenu = useMemo(() => {
-    const categoryOrder = ['Lebanese Grill', 'Broasted Chicken', 'Broast Platters', 'Platters', 'Salads', 'Burgers', 'Fries', 'Sides', 'Drinks'];
+    const categoryOrder = ['Wraps', 'Shawarma', 'Kebabs & Falafel', 'Lebanese Grill', 'Broasted Chicken', 'Broast Platters', 'Platters', 'Salads', 'Burgers', 'Fries', 'Sides', 'Drinks'];
     
     const grouped = menuItems.reduce((acc, item) => {
       const category = item.category;
@@ -46,18 +52,22 @@ export default function CustomerView({ tableId }: { tableId: string | null }) {
     <>
       <Header tableId={tableId} onCartClick={() => setCartOpen(true)} />
       <main className="container mx-auto px-4 md:px-6 py-12">
-        <div className="space-y-16">
+        <Accordion type="multiple" defaultValue={categorizedMenu.map(c => c.category)} className="w-full space-y-8">
           {categorizedMenu.map(({ category, items }) => (
-            <div key={category}>
-              <h2 className="text-4xl font-extrabold text-foreground mb-8 border-b-4 border-foreground pb-2">{category}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-                {items.map((item) => (
-                  <MenuItemCard key={item.id} item={item} onAddToCart={addToCart} />
-                ))}
-              </div>
-            </div>
+            <AccordionItem value={category} key={category} className="border-b-0">
+              <AccordionTrigger className="text-4xl font-extrabold text-foreground border-b-4 border-foreground pb-2 hover:no-underline">
+                {category}
+              </AccordionTrigger>
+              <AccordionContent className="pt-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+                  {items.map((item) => (
+                    <MenuItemCard key={item.id} item={item} onAddToCart={addToCart} />
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
           ))}
-        </div>
+        </Accordion>
       </main>
       <CartSheet isOpen={isCartOpen} onOpenChange={setCartOpen} tableId={tableId} />
       {/* Floating Cart Button for mobile */}
