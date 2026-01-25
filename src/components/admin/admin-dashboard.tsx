@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { LogOut, UtensilsCrossed, Zap, TrendingUp, Users, ShoppingBag, Database } from 'lucide-react'; // Added Database icon
 import { useToast } from '@/hooks/use-toast';
 import { pushLocalMenuToFirestore } from '@/lib/sync-menu'; // Import the sync utility
+import { useFirestore } from '@/firebase';
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -17,6 +18,7 @@ export default function AdminDashboard() {
   const [orders, setOrders] = useLocalStorage<Order[]>('orders', []);
   const [isMounted, setIsMounted] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false); // Loading state for sync
+  const firestore = useFirestore();
 
   useEffect(() => setIsMounted(true), []);
 
@@ -37,8 +39,16 @@ export default function AdminDashboard() {
 
   // Handle Menu Sync to Firestore
   const handleMenuSync = async () => {
+    if (!firestore) {
+       toast({
+        variant: "destructive",
+        title: "Sync Failed",
+        description: "Firestore not initialized.",
+      });
+      return;
+    }
     setIsSyncing(true);
-    const result = await pushLocalMenuToFirestore();
+    const result = await pushLocalMenuToFirestore(firestore);
     setIsSyncing(false);
 
     if (result.success) {

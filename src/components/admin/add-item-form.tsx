@@ -1,14 +1,16 @@
 "use client"
 
 import { useState } from "react";
-import { db } from "@/lib/firebase";
-import { collection, addDoc } from "firebase/firestore";
+import { collection } from "firebase/firestore";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { PlusCircle } from "lucide-react";
+import { useFirestore } from "@/firebase";
+import { addDocumentNonBlocking } from "@/firebase/non-blocking-updates";
 
 export default function AddItemForm() {
+  const firestore = useFirestore();
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -17,10 +19,15 @@ export default function AddItemForm() {
     image: ""
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!firestore) {
+      alert("Error: Firestore is not initialized.");
+      return;
+    }
     try {
-      await addDoc(collection(db, "menu"), {
+      const menuCollection = collection(firestore, "menu_items");
+      addDocumentNonBlocking(menuCollection, {
         ...formData,
         price: Number(formData.price),
         createdAt: new Date(),
@@ -30,6 +37,7 @@ export default function AddItemForm() {
       setFormData({ name: "", price: "", category: "Wraps", description: "", image: "" });
     } catch (err) {
       console.error("Error adding item:", err);
+      alert("Error adding item. See console for details.");
     }
   };
 

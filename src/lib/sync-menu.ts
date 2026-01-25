@@ -1,13 +1,12 @@
 "use client"
 
-import { db } from "./firebase";
-import { collection, writeBatch, doc } from "firebase/firestore";
+import { collection, writeBatch, doc, Firestore } from "firebase/firestore";
 import { menuItems } from "./menu-data"; // Your local data file
 
-export const pushLocalMenuToFirestore = async () => {
+export const pushLocalMenuToFirestore = async (db: Firestore) => {
   try {
     const batch = writeBatch(db);
-    const menuCollection = collection(db, "menu");
+    const menuCollection = collection(db, "menu_items");
 
     menuItems.forEach((item) => {
       // We use the local ID as the Document ID to prevent duplicates
