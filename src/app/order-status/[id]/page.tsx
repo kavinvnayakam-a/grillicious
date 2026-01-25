@@ -15,6 +15,7 @@ interface GrillPipe {
 
 export default function OrderStatusPage({ params }: { params: { id: string } }) {
   const router = useRouter();
+  const { id } = params;
   const [status, setStatus] = useState('Pending');
   const [orderData, setOrderData] = useState<any>(null);
   const [score, setScore] = useState(0);
@@ -35,7 +36,8 @@ export default function OrderStatusPage({ params }: { params: { id: string } }) 
 
   // --- 2. FIREBASE LISTENER ---
   useEffect(() => {
-    const unsub = onSnapshot(doc(db, "orders", params.id), (doc) => {
+    if (!id) return;
+    const unsub = onSnapshot(doc(db, "orders", id), (doc) => {
       if (doc.exists()) {
         const data = doc.data();
         setStatus(data.status);
@@ -44,7 +46,7 @@ export default function OrderStatusPage({ params }: { params: { id: string } }) 
       }
     });
     return () => unsub();
-  }, [params.id, router]);
+  }, [id, router]);
 
   // --- 3. AUTO-REDIRECT TIMER ---
   useEffect(() => {
