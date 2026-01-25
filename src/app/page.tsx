@@ -1,5 +1,6 @@
 import CustomerView from '@/components/customer-view';
 import { Suspense } from 'react';
+import Image from 'next/image';
 
 export default function Home({
   searchParams,
@@ -7,22 +8,18 @@ export default function Home({
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const tableId = typeof searchParams.table === 'string' ? searchParams.table : null;
+  const isTakeAway = searchParams.mode === 'takeaway' || (!tableId);
 
   return (
-    /* Styled Fallback to match your #d4af37 Mustard Yellow theme */
     <Suspense 
       fallback={
         <div className="h-screen w-full flex flex-col items-center justify-center bg-[#d4af37]">
-          <div className="flex flex-col items-center gap-4">
-             <div className="text-4xl font-black italic uppercase tracking-tighter text-zinc-900 animate-pulse">
-                Grillicious
-             </div>
-             <div className="h-1 w-12 bg-zinc-900 rounded-full animate-bounce" />
-          </div>
+          <Image src="https://firebasestorage.googleapis.com/v0/b/grillicious-backend.firebasestorage.app/o/Grillicious-logo.webp?alt=media&token=d67ff384-ece6-4583-8d05-1327121a8b15" alt="Grillicious Logo" width={300} height={75} className="animate-pulse" />
         </div>
       }
     >
-      <CustomerView tableId={tableId} />
+      {/* If no tableId is present, the CustomerView will handle the "Welcome" & "Takeaway" logic */}
+      <CustomerView tableId={tableId} mode={isTakeAway ? 'takeaway' : 'dine-in'} />
     </Suspense>
   );
 }

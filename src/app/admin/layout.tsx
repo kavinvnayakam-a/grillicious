@@ -1,4 +1,5 @@
 import { CartProvider } from '@/context/cart-context';
+import Image from 'next/image';
 
 export default function AdminLayout({
   children,
@@ -10,9 +11,7 @@ export default function AdminLayout({
       {/* Admin Top Navigation */}
       <nav className="h-16 bg-zinc-900 border-b-4 border-[#d4af37] flex items-center px-8 sticky top-0 z-50">
         <div className="flex items-center gap-2">
-          <span className="text-[#d4af37] font-black italic uppercase tracking-tighter text-xl">
-            Grillicious
-          </span>
+          <Image src="https://firebasestorage.googleapis.com/v0/b/grillicious-backend.firebasestorage.app/o/Grillicious-logo.webp?alt=media&token=d67ff384-ece6-4583-8d05-1327121a8b15" alt="Grillicious Logo" width={120} height={30} />
           <span className="text-white/40 font-bold text-[10px] uppercase tracking-widest ml-2 border-l border-white/20 pl-4">
             Management Portal
           </span>

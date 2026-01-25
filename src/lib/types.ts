@@ -1,11 +1,12 @@
 export interface MenuItem {
-  id: number;
+  id: string; // Changed from number to string for Firestore compatibility
   name: string;
   category: string;
   description: string;
   price: number;
-  image: string;
-  imageHint: string;
+  image: string;      // This will store the Firebase Storage URL
+  available: boolean;  // NEW: To track stock status
+  imageHint?: string; // Made optional as it's less critical with real photos
 }
 
 export interface CartItem extends MenuItem {
@@ -18,5 +19,5 @@ export interface Order {
   items: CartItem[];
   totalPrice: number;
   status: 'Received' | 'Preparing' | 'Served' | 'Completed';
-  timestamp: number;
+  timestamp: any; // Using 'any' or 'Timestamp' to handle Firestore Server Timestamps
 }

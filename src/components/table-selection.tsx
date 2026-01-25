@@ -2,7 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardDescription } from "@/components/ui/card";
+import Image from 'next/image';
 
 export default function TableSelection() {
   const router = useRouter();
@@ -22,9 +23,7 @@ export default function TableSelection() {
           <div className="mx-auto bg-zinc-900 text-white w-fit px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-4">
             Welcome
           </div>
-          <CardTitle className="text-4xl font-black uppercase italic tracking-tighter text-zinc-900 leading-none">
-            Grillicious!
-          </CardTitle>
+          <Image src="https://firebasestorage.googleapis.com/v0/b/grillicious-backend.firebasestorage.app/o/Grillicious-logo.webp?alt=media&token=d67ff384-ece6-4583-8d05-1327121a8b15" alt="Grillicious" width={250} height={60} className="mx-auto" />
           <CardDescription className="text-sm font-bold text-zinc-500 uppercase tracking-widest pt-3">
             Select your table to start
           </CardDescription>

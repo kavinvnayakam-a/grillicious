@@ -1,6 +1,7 @@
 "use client"
 
 import SessionTimer from "@/components/session-timer";
+import Image from 'next/image';
 
 type HeaderProps = {
   tableId: string | null;
@@ -16,9 +17,7 @@ export function Header({ tableId, timeLeft }: HeaderProps) {
         
         {/* Branding */}
         <div className="flex flex-col">
-          <span className="text-xl font-black italic uppercase tracking-tighter text-white leading-none">
-            Grillicious
-          </span>
+          <Image src="https://firebasestorage.googleapis.com/v0/b/grillicious-backend.firebasestorage.app/o/Grillicious-logo.webp?alt=media&token=d67ff384-ece6-4583-8d05-1327121a8b15" alt="Grillicious Logo" width={140} height={35} />
           <span className="text-[8px] font-bold text-[#d4af37] uppercase tracking-widest mt-0.5">
             Est 2025
           </span>
@@ -28,7 +27,7 @@ export function Header({ tableId, timeLeft }: HeaderProps) {
           {tableId && (
             <>
               {/* Compact Timer Pill */}
-              <div className="flex items-center bg-zinc-800 px-2.5 py-1 rounded-full border border-zinc-700">
+              <div className="hidden md:flex items-center bg-zinc-800 px-2.5 py-1 rounded-full border border-zinc-700">
                 <SessionTimer timeLeft={timeLeft} />
               </div>
               
@@ -55,6 +54,12 @@ export function Header({ tableId, timeLeft }: HeaderProps) {
           )}
         </div>
       </div>
+       {/* Timer for Mobile */}
+       {tableId && (
+          <div className="md:hidden absolute top-20 right-4 bg-zinc-800/90 backdrop-blur-sm text-white px-4 py-2 rounded-xl border border-zinc-700 shadow-lg">
+            <SessionTimer timeLeft={timeLeft} />
+          </div>
+        )}
     </header>
   );
 }

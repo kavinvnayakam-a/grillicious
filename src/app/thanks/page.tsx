@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from "@/components/ui/button";
 import { Heart, Instagram, MessageCircle, Facebook, Star, QrCode } from "lucide-react";
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function ThankYouPage() {
   const router = useRouter();
@@ -28,9 +29,7 @@ export default function ThankYouPage() {
           </div>
         </div>
 
-        <h1 className="text-4xl font-black uppercase italic tracking-tighter leading-none mb-2">
-          Grillicious
-        </h1>
+        <Image src="https://firebasestorage.googleapis.com/v0/b/grillicious-backend.firebasestorage.app/o/Grillicious-logo.webp?alt=media&token=d67ff384-ece6-4583-8d05-1327121a8b15" alt="Grillicious Logo" width={250} height={60} className="mx-auto mb-2" />
         <p className="text-[10px] font-black uppercase tracking-[0.3em] text-zinc-400 mb-6">
           Hearts Full. Bellies Fuller.
         </p>
