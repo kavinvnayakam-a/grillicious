@@ -101,8 +101,8 @@ export default function CustomerView({ tableId }: { tableId: string | null }) {
     return (
       <div className="min-h-screen bg-[#e76876] flex items-center justify-center">
         <div className="text-center">
-          <div className="w-12 h-12 border-4 border-zinc-900 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <h2 className="font-black uppercase italic text-zinc-900 tracking-tighter">Setting the Grill...</h2>
+          <div className="w-12 h-12 border-4 border-black border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <h2 className="font-black uppercase italic text-black tracking-tighter">Setting the Grill...</h2>
         </div>
       </div>
     );
@@ -133,14 +133,14 @@ export default function CustomerView({ tableId }: { tableId: string | null }) {
                 <div className="bg-zinc-900 p-2 rounded-xl text-[#e76876]"><MapPin size={18}/></div>
                 <div>
                   <p className="text-[10px] font-black uppercase text-zinc-400">Find Us</p>
-                  <p className="font-black text-sm uppercase">Hyderabad-Vansthalipuram, HYD</p>
+                  <p className="font-black text-sm uppercase text-black">Hyderabad-Vansthalipuram, HYD</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
                 <div className="bg-zinc-900 p-2 rounded-xl text-[#e76876]"><ClockIcon size={18}/></div>
                 <div>
                   <p className="text-[10px] font-black uppercase text-zinc-400">Hours</p>
-                  <p className="font-black text-sm uppercase">12:00 PM - 12:00 AM</p>
+                  <p className="font-black text-sm uppercase text-black">12:00 PM - 12:00 AM</p>
                 </div>
               </div>
             </div>

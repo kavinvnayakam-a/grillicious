@@ -102,7 +102,7 @@ export default function AnalyticsDashboard() {
         {/* 2. RECENT TRANSACTIONS (Combined Feed) */}
         <div className="lg:col-span-2 bg-white border-4 border-zinc-900 rounded-[2.5rem] shadow-[8px_8px_0_0_#000] overflow-hidden">
           <div className="p-8 border-b-2 border-zinc-100 flex justify-between items-center bg-zinc-50">
-            <h3 className="text-2xl font-black uppercase italic tracking-tighter">Day Transaction Log</h3>
+            <h3 className="text-2xl font-black uppercase italic tracking-tighter text-black">Day Transaction Log</h3>
             <div className="px-4 py-1 bg-zinc-900 text-[#e76876] rounded-full text-[10px] font-black uppercase tracking-widest">
               {loading ? "Syncing..." : "Updated"}
             </div>
@@ -133,7 +133,7 @@ export default function AnalyticsDashboard() {
                       </p>
                       <p className="text-[10px] font-bold text-zinc-400 mt-1">#{order.orderNumber || '0000'}</p>
                     </td>
-                    <td className="px-8 py-6 text-right font-black text-lg">
+                    <td className="px-8 py-6 text-right font-black text-lg text-black">
                       {formatCurrency(order.totalPrice)}
                     </td>
                   </tr>
@@ -185,8 +185,8 @@ function StatCard({ title, value, icon, color, textColor = "text-white" }: any) 
         {icon}
       </div>
       <div>
-        <p className="text-[10px] font-black uppercase text-zinc-400 tracking-widest leading-none">{title}</p>
-        <p className="text-2xl font-black italic text-zinc-900 mt-1 leading-none">{value}</p>
+        <p className="text-[10px] font-black uppercase text-zinc-500 tracking-widest leading-none">{title}</p>
+        <p className="text-2xl font-black italic text-black mt-1 leading-none">{value}</p>
       </div>
     </div>
   );
