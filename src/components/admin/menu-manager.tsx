@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react';
-import { db } from '@/firebase/config';
+import { useFirestore, useStorage } from '@/firebase';
 import { collection, onSnapshot, updateDoc, doc, deleteDoc, addDoc, serverTimestamp } from 'firebase/firestore';
 import { uploadMenuImage } from '@/lib/upload-image';
 import { Button } from '@/components/ui/button';
@@ -13,26 +13,31 @@ export default function MenuManager() {
   const [items, setItems] = useState<MenuItem[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const [file, setFile] = useState<File | null>(null);
+  const firestore = useFirestore();
+  const storage = useStorage();
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(db, "menu_items"), (snapshot) => {
+    if (!firestore) return;
+    const unsubscribe = onSnapshot(collection(firestore, "menu_items"), (snapshot) => {
       setItems(snapshot.docs.map(doc => ({ 
         id: doc.id, 
         ...doc.data() 
       } as MenuItem)));
     });
     return () => unsubscribe();
-  }, []);
+  }, [firestore]);
 
   const toggleStatus = async (item: MenuItem) => {
-    const itemRef = doc(db, "menu_items", item.id);
+    if (!firestore) return;
+    const itemRef = doc(firestore, "menu_items", item.id);
     await updateDoc(itemRef, { available: !item.available });
   };
 
   const handleRemoveImage = async (itemId: string) => {
+    if (!firestore) return;
     if (!confirm("Remove this image? The item will stay on the menu.")) return;
     try {
-      const itemRef = doc(db, "menu_items", itemId);
+      const itemRef = doc(firestore, "menu_items", itemId);
       await updateDoc(itemRef, { image: "" });
     } catch (err) {
       console.error("Error removing image:", err);
@@ -40,11 +45,12 @@ export default function MenuManager() {
   };
 
   const handleUpdateImage = async (itemId: string, newFile: File) => {
+    if (!firestore || !storage) return;
     setIsUploading(true);
     try {
-      const imageUrl = await uploadMenuImage(newFile);
+      const imageUrl = await uploadMenuImage(storage, newFile);
       if (imageUrl) {
-        const itemRef = doc(db, "menu_items", itemId);
+        const itemRef = doc(firestore, "menu_items", itemId);
         await updateDoc(itemRef, { image: imageUrl });
       }
     } catch (err) {
@@ -56,14 +62,15 @@ export default function MenuManager() {
 
   const handleAddItem = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!firestore || !storage) return;
     setIsUploading(true);
     const formData = new FormData(e.currentTarget);
     try {
       let imageUrl = "";
       if (file) {
-        imageUrl = await uploadMenuImage(file) || "";
+        imageUrl = await uploadMenuImage(storage, file) || "";
       }
-      await addDoc(collection(db, "menu_items"), {
+      await addDoc(collection(firestore, "menu_items"), {
         name: formData.get("name"),
         price: Number(formData.get("price")),
         category: formData.get("category"),
@@ -195,7 +202,7 @@ export default function MenuManager() {
 
                 <td className="p-4 text-right">
                   <button 
-                    onClick={async () => { if(confirm("Delete item permanently?")) await deleteDoc(doc(db, "menu_items", item.id)) }}
+                    onClick={async () => { if(confirm("Delete item permanently?")) { if (firestore) await deleteDoc(doc(firestore, "menu_items", item.id)) } }}
                     className="p-3 bg-zinc-50 text-zinc-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all"
                   >
                     <Trash2 className="h-5 w-5" />

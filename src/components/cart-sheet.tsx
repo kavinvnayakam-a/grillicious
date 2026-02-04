@@ -9,7 +9,7 @@ import Image from "next/image";
 import { Minus, Plus, Trash2, ShoppingBag, Loader2, ImageIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { db } from "@/firebase/config";
+import { useFirestore } from "@/firebase";
 import { collection, addDoc, serverTimestamp, doc, runTransaction } from "firebase/firestore";
 
 type CartSheetProps = {
@@ -23,18 +23,19 @@ export function CartSheet({ isOpen, onOpenChange, tableId }: CartSheetProps) {
   const { toast } = useToast();
   const router = useRouter();
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
+  const firestore = useFirestore();
 
   const handlePlaceOrder = async () => {
-    if (cartItems.length === 0) return;
+    if (cartItems.length === 0 || !firestore) return;
     setIsPlacingOrder(true);
 
     try {
       // 1. Get Today's Date String for the counter reset
       const today = new Date().toISOString().split('T')[0]; 
-      const counterRef = doc(db, "daily_stats", today);
+      const counterRef = doc(firestore, "daily_stats", today);
 
       // 2. Run Transaction to get the next sequential Order Number (0001 - 1000)
-      const orderNumber = await runTransaction(db, async (transaction) => {
+      const orderNumber = await runTransaction(firestore, async (transaction) => {
         const counterDoc = await transaction.get(counterRef);
         let newCount = 1;
 
@@ -66,7 +67,7 @@ export function CartSheet({ isOpen, onOpenChange, tableId }: CartSheetProps) {
       };
 
       // 4. Push to Firebase
-      const docRef = await addDoc(collection(db, "orders"), orderData);
+      const docRef = await addDoc(collection(firestore, "orders"), orderData);
 
       toast({
         title: `Order #${orderNumber} Sent! 🚀`,

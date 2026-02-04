@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react';
-import { db } from '@/firebase/config';
+import { useFirestore } from '@/firebase';
 import { collection, getDocs, query, orderBy, where, Timestamp } from 'firebase/firestore';
 import { Search, Calendar, Hash, Utensils, Printer, Clock } from 'lucide-react';
 
@@ -10,35 +10,37 @@ export default function OrderHistory() {
   const [history, setHistory] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const firestore = useFirestore();
 
   useEffect(() => {
+    if (!firestore) return;
+    const fetchHistory = async () => {
+      setIsLoading(true);
+      try {
+        const start = new Date(selectedDate);
+        start.setHours(0, 0, 0, 0);
+        const end = new Date(selectedDate);
+        end.setHours(23, 59, 59, 999);
+
+        const q = query(
+          collection(firestore, "order_history"),
+          where("timestamp", ">=", Timestamp.fromDate(start)),
+          where("timestamp", "<=", Timestamp.fromDate(end)),
+          orderBy("timestamp", "desc")
+        );
+
+        const snap = await getDocs(q);
+        const docs = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        setHistory(docs);
+      } catch (err) {
+        console.error("History fetch error:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
     fetchHistory();
-  }, [selectedDate]);
+  }, [selectedDate, firestore]);
 
-  const fetchHistory = async () => {
-    setIsLoading(true);
-    try {
-      const start = new Date(selectedDate);
-      start.setHours(0, 0, 0, 0);
-      const end = new Date(selectedDate);
-      end.setHours(23, 59, 59, 999);
-
-      const q = query(
-        collection(db, "order_history"),
-        where("timestamp", ">=", Timestamp.fromDate(start)),
-        where("timestamp", "<=", Timestamp.fromDate(end)),
-        orderBy("timestamp", "desc")
-      );
-
-      const snap = await getDocs(q);
-      const docs = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setHistory(docs);
-    } catch (err) {
-      console.error("History fetch error:", err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const filteredHistory = history.filter(h => 
     h.tableId?.toString().toLowerCase().includes(searchTerm.toLowerCase()) ||

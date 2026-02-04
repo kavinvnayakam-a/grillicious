@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSessionTimer } from '@/hooks/use-session-timer';
 import { useCart } from '@/hooks/use-cart';
-import { db } from '@/firebase/config'; 
+import { useFirestore } from '@/firebase'; 
 import { collection, onSnapshot, query } from 'firebase/firestore'; 
 import { Header } from '@/components/header';
 import { MenuItemCard } from '@/components/menu-item-card';
@@ -29,6 +29,7 @@ export default function CustomerView({ tableId }: { tableId: string | null }) {
   const [isCartOpen, setCartOpen] = useState(false);
   const [showMenu, setShowMenu] = useState(!!tableId); // If table scanned, skip storefront
   const { toast } = useToast();
+  const firestore = useFirestore();
 
   // --- LIVE DATA STATE ---
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
@@ -36,7 +37,8 @@ export default function CustomerView({ tableId }: { tableId: string | null }) {
 
   // --- REAL-TIME FIRESTORE LISTENER ---
   useEffect(() => {
-    const q = query(collection(db, "menu_items")); 
+    if (!firestore) return;
+    const q = query(collection(firestore, "menu_items")); 
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const items = snapshot.docs.map(doc => ({
         id: doc.id,
@@ -49,7 +51,7 @@ export default function CustomerView({ tableId }: { tableId: string | null }) {
       setLoading(false);
     });
     return () => unsubscribe(); 
-  }, []);
+  }, [firestore]);
 
   const { timeLeft } = useSessionTimer(() => {
     clearCart();

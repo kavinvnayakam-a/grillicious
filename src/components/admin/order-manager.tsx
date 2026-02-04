@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react';
-import { db } from '@/firebase/config';
+import { useFirestore } from '@/firebase';
 import { 
   collection, onSnapshot, query, orderBy, doc, 
   updateDoc, writeBatch, serverTimestamp, getDoc, setDoc 
@@ -28,6 +28,7 @@ export default function OrderManager() {
   const [showSettings, setShowSettings] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [printTime, setPrintTime] = useState("");
+  const firestore = useFirestore();
   
   const [printSettings, setPrintSettings] = useState<PrintSettings>({
     storeName: "GRILLICIOUS",
@@ -47,17 +48,18 @@ export default function OrderManager() {
 
   // Live Sync Orders & Settings
   useEffect(() => {
-    const q = query(collection(db, "orders"), orderBy("timestamp", "desc"));
+    if (!firestore) return;
+    const q = query(collection(firestore, "orders"), orderBy("timestamp", "desc"));
     const unsubOrders = onSnapshot(q, (snapshot) => {
       setOrders(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Order[]);
     });
 
-    const unsubSettings = onSnapshot(doc(db, "settings", "print_template"), (d) => {
+    const unsubSettings = onSnapshot(doc(firestore, "settings", "print_template"), (d) => {
       if (d.exists()) setPrintSettings(d.data() as PrintSettings);
     });
 
     return () => { unsubOrders(); unsubSettings(); };
-  }, []);
+  }, [firestore]);
 
   const tableMap = orders.reduce((acc, order) => {
     const key = order.tableId || 'Takeaway';
@@ -69,12 +71,14 @@ export default function OrderManager() {
   // --- ACTIONS ---
 
   const approveOrder = async (orderId: string) => {
-    await updateDoc(doc(db, "orders", orderId), { status: "Received" });
+    if (!firestore) return;
+    await updateDoc(doc(firestore, "orders", orderId), { status: "Received" });
     toast({ title: "Order Approved" });
   };
 
   const markItemServed = async (orderId: string, itemIndex: number) => {
-    const orderRef = doc(db, "orders", orderId);
+    if (!firestore) return;
+    const orderRef = doc(firestore, "orders", orderId);
     const orderSnap = await getDoc(orderRef);
     if (!orderSnap.exists()) return;
     
@@ -85,8 +89,9 @@ export default function OrderManager() {
   };
 
   const triggerFinalServed = async (orderId: string) => {
+    if (!firestore) return;
     // This is the trigger for the 3-minute timer on customer page
-    await updateDoc(doc(db, "orders", orderId), { 
+    await updateDoc(doc(firestore, "orders", orderId), { 
       status: "Served", 
       helpRequested: false 
     });
@@ -94,25 +99,28 @@ export default function OrderManager() {
   };
 
   const resolveHelp = async (orderId: string) => {
-    await updateDoc(doc(db, "orders", orderId), { helpRequested: false });
+    if (!firestore) return;
+    await updateDoc(doc(firestore, "orders", orderId), { helpRequested: false });
     toast({ title: "Help Request Resolved" });
   };
 
   const archiveTable = async (tableId: string) => {
+    if (!firestore) return;
     const toArchive = tableMap[tableId]?.filter(o => o.status === 'Served') || [];
     if (toArchive.length === 0) return toast({ title: "No served orders found", variant: "destructive" });
     
-    const batch = writeBatch(db);
+    const batch = writeBatch(firestore);
     toArchive.forEach(o => {
-      batch.set(doc(collection(db, "order_history")), { ...o, archivedAt: serverTimestamp() });
-      batch.delete(doc(db, "orders", o.id));
+      batch.set(doc(collection(firestore, "order_history")), { ...o, archivedAt: serverTimestamp() });
+      batch.delete(doc(firestore, "orders", o.id));
     });
     await batch.commit();
     toast({ title: "Table Cleared & Archived" });
   };
 
   const saveSettings = async () => {
-    await setDoc(doc(db, "settings", "print_template"), printSettings);
+    if (!firestore) return;
+    await setDoc(doc(firestore, "settings", "print_template"), printSettings);
     setShowSettings(false);
     toast({ title: "Print Template Saved" });
   };

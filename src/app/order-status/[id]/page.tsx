@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState, useRef } from 'react';
-import { db } from '@/firebase/config';
+import { useFirestore } from '@/firebase';
 import { 
   doc, 
   onSnapshot, 
@@ -42,6 +42,7 @@ export default function OrderStatusPage() {
   const router = useRouter();
   const params = useParams();
   const id = params.id as string;
+  const firestore = useFirestore();
 
   // UI & Game State
   const [status, setStatus] = useState('Pending');
@@ -68,10 +69,11 @@ export default function OrderStatusPage() {
 
   // 1. Fetch Menu
   useEffect(() => {
+    if (!firestore) return;
     const fetchMenu = async () => {
       setLoadingMenu(true);
       try {
-        const querySnapshot = await getDocs(collection(db, "menu_items"));
+        const querySnapshot = await getDocs(collection(firestore, "menu_items"));
         const items = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
         setFullMenu(items);
         const categories = [...new Set(items.map(i => i.category || 'General'))];
@@ -80,7 +82,7 @@ export default function OrderStatusPage() {
       finally { setLoadingMenu(false); }
     };
     fetchMenu();
-  }, []);
+  }, [firestore]);
 
   // --- 2. PERSISTENT TIMER LOGIC ---
   useEffect(() => {
@@ -131,8 +133,8 @@ export default function OrderStatusPage() {
 
   // 4. Firebase Sync
   useEffect(() => {
-    if (!id) return;
-    const unsub = onSnapshot(doc(db, "orders", id), (docSnapshot) => {
+    if (!id || !firestore) return;
+    const unsub = onSnapshot(doc(firestore, "orders", id), (docSnapshot) => {
       if (docSnapshot.exists()) {
         const data = docSnapshot.data();
         if (data.status === 'Ready' && lastStatus.current !== 'Ready') {
@@ -151,11 +153,12 @@ export default function OrderStatusPage() {
       }
     });
     return () => unsub();
-  }, [id, isTimerRunning]);
+  }, [id, firestore, isTimerRunning]);
 
   // 5. Logic Handlers
   const addMoreFood = async (item: any) => {
-    const orderRef = doc(db, "orders", id);
+    if (!firestore) return;
+    const orderRef = doc(firestore, "orders", id);
     try {
       await updateDoc(orderRef, {
         items: arrayUnion({ name: item.name, quantity: 1, price: item.price, status: "Pending", addedAt: new Date().toISOString() }),
@@ -167,10 +170,10 @@ export default function OrderStatusPage() {
   };
 
   const requestHelp = async () => {
-    if (helpLoading || orderData?.helpRequested) return;
+    if (helpLoading || orderData?.helpRequested || !firestore) return;
     setHelpLoading(true);
     try {
-      await updateDoc(doc(db, "orders", id), { helpRequested: true, helpRequestedAt: serverTimestamp() });
+      await updateDoc(doc(firestore, "orders", id), { helpRequested: true, helpRequestedAt: serverTimestamp() });
     } finally { setHelpLoading(false); }
   };
 

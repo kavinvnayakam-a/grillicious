@@ -6,7 +6,7 @@ import MenuManager from "@/components/admin/menu-manager";
 import OrderManager from "@/components/admin/order-manager"; 
 import AnalyticsDashboard from "@/components/admin/analytics-dashboard";
 import OrderHistory from "@/components/admin/order-history"; 
-import { db } from "@/firebase/config";
+import { useFirestore } from "@/firebase";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { 
   LayoutDashboard, 
@@ -22,11 +22,13 @@ import {
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<'orders' | 'history' | 'menu' | 'analytics'>('orders');
   const [takeawayCount, setTakeawayCount] = useState(0);
+  const firestore = useFirestore();
 
   // Live listener for Takeaway order count to show in sidebar
   useEffect(() => {
+    if (!firestore) return;
     const q = query(
-      collection(db, "orders"), 
+      collection(firestore, "orders"), 
       where("tableId", "==", "Takeaway")
     );
     
@@ -35,7 +37,7 @@ export default function AdminDashboard() {
     });
     
     return () => unsubscribe();
-  }, []);
+  }, [firestore]);
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-white font-sans selection:bg-zinc-900 selection:text-white">

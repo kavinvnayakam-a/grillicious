@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from 'react';
-import { db } from '@/firebase/config';
+import { useFirestore } from '@/firebase';
 import { collection, onSnapshot, query, orderBy, where, Timestamp, getDocs } from 'firebase/firestore';
 import { Order } from '@/lib/types';
 import { 
@@ -20,8 +20,10 @@ export default function AnalyticsDashboard() {
   const [historyOrders, setHistoryOrders] = useState<Order[]>([]);
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
   const [loading, setLoading] = useState(true);
+  const firestore = useFirestore();
 
   useEffect(() => {
+    if (!firestore) return;
     setLoading(true);
     
     // 1. Setup Date Range for the Selected Day
@@ -32,7 +34,7 @@ export default function AnalyticsDashboard() {
 
     // 2. Listen to LIVE ORDERS (Only for today)
     const qLive = query(
-      collection(db, "orders"), 
+      collection(firestore, "orders"), 
       where("timestamp", ">=", Timestamp.fromDate(start)),
       where("timestamp", "<=", Timestamp.fromDate(end))
     );
@@ -46,7 +48,7 @@ export default function AnalyticsDashboard() {
     const fetchHistory = async () => {
       try {
         const qHist = query(
-          collection(db, "order_history"),
+          collection(firestore, "order_history"),
           where("timestamp", ">=", Timestamp.fromDate(start)),
           where("timestamp", "<=", Timestamp.fromDate(end)),
           orderBy("timestamp", "desc")
@@ -63,7 +65,7 @@ export default function AnalyticsDashboard() {
 
     fetchHistory();
     return () => unsubLive();
-  }, [selectedDate]);
+  }, [selectedDate, firestore]);
 
   // --- MERGED CALCULATIONS (Live + History) ---
   const allOrders = [...liveOrders, ...historyOrders];

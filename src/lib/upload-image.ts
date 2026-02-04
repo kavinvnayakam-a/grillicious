@@ -1,12 +1,12 @@
-import { storage } from "@/firebase/config";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { FirebaseStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 /**
  * Uploads an image to Firebase Storage and returns the public URL.
+ * @param storage The Firebase Storage instance.
  * @param file The image file from an input element
  * @param folder The subfolder in storage (defaults to 'menu')
  */
-export async function uploadMenuImage(file: File, folder: string = "menu-items") {
+export async function uploadMenuImage(storage: FirebaseStorage, file: File, folder: string = "menu-items") {
   if (!file) return null;
 
   try {
